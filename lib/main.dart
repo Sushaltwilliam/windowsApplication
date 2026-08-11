@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Kintted Wings',
+      title: 'Anraone',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -79,7 +79,7 @@ class RootSelectionScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       const Text(
-                        'Kintted Wings',
+                        'Anraone',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 28,

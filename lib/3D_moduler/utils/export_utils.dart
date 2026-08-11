@@ -17,8 +17,8 @@ class ExportUtils {
     double pixelRatio = 2.0,
   }) async {
     try {
-      final boundary = key.currentContext?.findRenderObject()
-          as RenderRepaintBoundary?;
+      final boundary =
+          key.currentContext?.findRenderObject() as RenderRepaintBoundary?;
       if (boundary == null) return null;
       final image = await boundary.toImage(pixelRatio: pixelRatio);
       final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
@@ -71,7 +71,7 @@ class ExportUtils {
   /// Shares [bytes] as a PNG image using the system share sheet.
   static Future<void> shareImage(
     Uint8List bytes, {
-    String text = 'My Kintted Wings Window Design',
+    String text = 'My Anraone Window Design',
     String filename = 'window_design',
   }) async {
     try {
@@ -93,9 +93,8 @@ class ExportUtils {
     String successMessage = 'Image saved!',
   }) {
     final msg = filePath != null ? successMessage : 'Export failed.';
-    final color = filePath != null
-        ? const Color(0xFF2E7D32)
-        : const Color(0xFFC62828);
+    final color =
+        filePath != null ? const Color(0xFF2E7D32) : const Color(0xFFC62828);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(children: [

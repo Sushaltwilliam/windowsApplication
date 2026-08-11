@@ -52,11 +52,9 @@ class _DesignerScreenState extends State<DesignerScreen>
       context: ctx,
       builder: (_) => AlertDialog(
         backgroundColor: const Color(0xFF161B27),
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Text('Save Design',
-            style:
-                TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         content: TextField(
           controller: ctrl,
           style: const TextStyle(color: Colors.white),
@@ -191,13 +189,10 @@ class _DesignerScreenState extends State<DesignerScreen>
 
   // ── AppBar ────────────────────────────────────────────────────────────────
   PreferredSizeWidget _appBar(WindowDesignerProvider p, bool is2D) {
-    Widget btn(IconData ic,
-            {Color? col, VoidCallback? fn, String tip = ''}) =>
+    Widget btn(IconData ic, {Color? col, VoidCallback? fn, String tip = ''}) =>
         IconButton(
           icon: Icon(ic,
-              color: col ??
-                  (is2D ? Colors.black87 : Colors.white),
-              size: 21),
+              color: col ?? (is2D ? Colors.black87 : Colors.white), size: 21),
           onPressed: fn,
           tooltip: tip,
           splashRadius: 18,
@@ -217,63 +212,30 @@ class _DesignerScreenState extends State<DesignerScreen>
           child: Container(color: Colors.transparent),
         ),
       ),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text('Window Designer',
-              style: TextStyle(
-                  color: is2D ? Colors.black87 : Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16)),
-          Text(is2D ? '2D Technical Drawing' : '3D Preview',
-              style: TextStyle(
-                  color: is2D ? Colors.black38 : Colors.white38,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w500)),
-        ],
-      ),
-      iconTheme:
-          IconThemeData(color: is2D ? Colors.black87 : Colors.white),
-      actions: [
-        // 2D/3D toggle
-        Padding(
-          padding:
-              const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-          child: Material(
-            color: is2D
-                ? const Color(0xFF1565C0).withOpacity(0.12)
-                : Colors.white.withOpacity(0.1),
+      titleSpacing: 0,
+      leadingWidth: 68,
+      leading: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+        child: Material(
+          color: is2D
+              ? const Color(0xFF1565C0).withOpacity(0.12)
+              : Colors.white.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(20),
+          child: InkWell(
             borderRadius: BorderRadius.circular(20),
-            child: InkWell(
-              borderRadius: BorderRadius.circular(20),
-              onTap: p.toggleViewMode,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 10, vertical: 4),
-                child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  Icon(
-                    is2D
-                        ? Icons.view_in_ar_outlined
-                        : Icons.architecture,
-                    size: 15,
-                    color: is2D
-                        ? const Color(0xFF1565C0)
-                        : Colors.white70,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(is2D ? '3D' : '2D',
-                      style: TextStyle(
-                          color: is2D
-                              ? const Color(0xFF1565C0)
-                              : Colors.white70,
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold)),
-                ]),
-              ),
+            onTap: p.toggleViewMode,
+            child: Center(
+              child: Text(is2D ? '3D' : '2D',
+                  style: TextStyle(
+                      color: is2D ? const Color(0xFF1565C0) : Colors.white70,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold)),
             ),
           ),
         ),
+      ),
+      iconTheme: IconThemeData(color: is2D ? Colors.black87 : Colors.white),
+      actions: [
         btn(Icons.undo,
             col: p.canUndo
                 ? (is2D ? Colors.black87 : Colors.white)
@@ -288,19 +250,13 @@ class _DesignerScreenState extends State<DesignerScreen>
             tip: 'Redo'),
         btn(Icons.save_outlined,
             fn: () => _saveDialog(context, p), tip: 'Save'),
-        btn(Icons.fit_screen,
-            fn: p.resetCanvasTransform, tip: 'Reset View'),
+        btn(Icons.fit_screen, fn: p.resetCanvasTransform, tip: 'Reset View'),
         if (!is2D)
-          btn(
-              isOpen
-                  ? Icons.flip_to_back
-                  : Icons.flip_to_front,
-              fn: () => _toggleOpen(!isOpen),
-              tip: 'Animate Window Opening'),
+          btn(isOpen ? Icons.flip_to_back : Icons.flip_to_front,
+              fn: () => _toggleOpen(!isOpen), tip: 'Animate Window Opening'),
         Builder(
             builder: (ctx) => btn(Icons.folder_open_outlined,
-                fn: () => Scaffold.of(ctx).openEndDrawer(),
-                tip: 'Projects')),
+                fn: () => Scaffold.of(ctx).openEndDrawer(), tip: 'Projects')),
         btn(Icons.ios_share_outlined,
             fn: () => _exportDesign(context), tip: 'Export PNG'),
         const SizedBox(width: 4),
@@ -336,12 +292,10 @@ class _DesignerScreenState extends State<DesignerScreen>
                         color: Colors.white12, size: 56),
                     SizedBox(height: 16),
                     Text('Tap  +  to place a window',
-                        style:
-                            TextStyle(color: Colors.white24, fontSize: 14)),
+                        style: TextStyle(color: Colors.white24, fontSize: 14)),
                     SizedBox(height: 6),
                     Text('Use Photo button to load a building photo',
-                        style:
-                            TextStyle(color: Colors.white12, fontSize: 11)),
+                        style: TextStyle(color: Colors.white12, fontSize: 11)),
                   ],
                 ),
               ),
@@ -381,9 +335,7 @@ class _DesignerScreenState extends State<DesignerScreen>
           child: GestureDetector(
             onPanUpdate: (d) {
               if (!w.isLocked) {
-                final newCorners = w.corners
-                    .map((c) => c + d.delta)
-                    .toList();
+                final newCorners = w.corners.map((c) => c + d.delta).toList();
                 p.updateWindow(corners: newCorners);
               }
             },
@@ -391,11 +343,11 @@ class _DesignerScreenState extends State<DesignerScreen>
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.08),
                 shape: BoxShape.circle,
-                border: Border.all(
-                    color: Colors.white.withOpacity(0.3), width: 1),
+                border:
+                    Border.all(color: Colors.white.withOpacity(0.3), width: 1),
               ),
-              child: const Icon(Icons.open_with,
-                  color: Colors.white54, size: 18),
+              child:
+                  const Icon(Icons.open_with, color: Colors.white54, size: 18),
             ),
           ),
         ));
@@ -451,13 +403,11 @@ class _DesignerScreenState extends State<DesignerScreen>
             p.duplicateWindow(i);
             Navigator.pop(context);
           }),
-          _menuItem(
-              w.isLocked ? Icons.lock_open : Icons.lock,
-              w.isLocked ? 'Unlock' : 'Lock',
-              () {
-                p.lockWindow(i, !w.isLocked);
-                Navigator.pop(context);
-              }),
+          _menuItem(w.isLocked ? Icons.lock_open : Icons.lock,
+              w.isLocked ? 'Unlock' : 'Lock', () {
+            p.lockWindow(i, !w.isLocked);
+            Navigator.pop(context);
+          }),
           _menuItem(Icons.flip, 'Flip Horizontal', () {
             p.selectWindow(i);
             p.flipSelectedWindow(horizontal: true);
@@ -476,12 +426,10 @@ class _DesignerScreenState extends State<DesignerScreen>
             p.sendToBack(i);
             Navigator.pop(context);
           }),
-          _menuItem(Icons.delete_outline, 'Delete',
-              () {
-                p.removeWindow(i);
-                Navigator.pop(context);
-              },
-              color: const Color(0xFFFF6B6B)),
+          _menuItem(Icons.delete_outline, 'Delete', () {
+            p.removeWindow(i);
+            Navigator.pop(context);
+          }, color: const Color(0xFFFF6B6B)),
           const SizedBox(height: 8),
         ]),
       ),
@@ -493,8 +441,8 @@ class _DesignerScreenState extends State<DesignerScreen>
     return ListTile(
       leading:
           Icon(icon, color: color == Colors.white ? Colors.blueAccent : color),
-      title:
-          Text(label, style: TextStyle(color: color, fontWeight: FontWeight.w500)),
+      title: Text(label,
+          style: TextStyle(color: color, fontWeight: FontWeight.w500)),
       onTap: onTap,
     );
   }
@@ -562,7 +510,9 @@ class _DesignerScreenState extends State<DesignerScreen>
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
         child: Container(
-          height: 68,
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(ctx).padding.bottom,
+          ),
           decoration: BoxDecoration(
             color: is2D
                 ? Colors.white.withOpacity(0.88)
@@ -573,8 +523,8 @@ class _DesignerScreenState extends State<DesignerScreen>
                         ? Colors.black.withOpacity(0.08)
                         : Colors.white.withOpacity(0.08))),
           ),
-          child: SafeArea(
-            top: false,
+          child: SizedBox(
+            height: 56,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -582,8 +532,7 @@ class _DesignerScreenState extends State<DesignerScreen>
                 _toolBtn(Icons.add_circle_outline, 'Add',
                     () => p.addWindow(canvasSize: MediaQuery.of(ctx).size),
                     col: is2D ? Colors.black87 : Colors.white),
-                _toolBtn(Icons.draw, 'Draw',
-                    () => _showCustomMenu(ctx),
+                _toolBtn(Icons.draw, 'Draw', () => _showCustomMenu(ctx),
                     col: is2D ? Colors.black87 : Colors.white),
                 if (!is2D)
                   _toolBtn(Icons.photo_library_outlined, 'Photo',
@@ -592,7 +541,8 @@ class _DesignerScreenState extends State<DesignerScreen>
                   _toolBtn(Icons.clear, 'Clear BG', p.clearBackgroundImage,
                       col: Colors.orange),
                 if (sel) ...[
-                  _toolBtn(Icons.tune, 'Properties', () => _showPropertiesSheet(ctx, p),
+                  _toolBtn(Icons.tune, 'Properties',
+                      () => _showPropertiesSheet(ctx, p),
                       col: const Color(0xFF4F7BF7)),
                   _toolBtn(Icons.copy_outlined, 'Duplicate',
                       () => p.duplicateWindow(p.selectedWindowIndex),
@@ -607,9 +557,7 @@ class _DesignerScreenState extends State<DesignerScreen>
                       () => p.removeWindow(p.selectedWindowIndex),
                       col: const Color(0xFFFF6B6B)),
                 ],
-                _toolBtn(
-                    p.gridEnabled ? Icons.grid_on : Icons.grid_off,
-                    'Grid',
+                _toolBtn(p.gridEnabled ? Icons.grid_on : Icons.grid_off, 'Grid',
                     p.toggleGrid,
                     col: p.gridEnabled
                         ? const Color(0xFF4F7BF7)
@@ -641,12 +589,10 @@ class _DesignerScreenState extends State<DesignerScreen>
                     fontWeight: FontWeight.bold)),
           ),
           ListTile(
-            leading:
-                const Icon(Icons.draw, color: Colors.blueAccent),
+            leading: const Icon(Icons.draw, color: Colors.blueAccent),
             title: const Text('Freehand CAD Drawer',
                 style: TextStyle(color: Colors.white)),
-            subtitle: const Text(
-                'Draw exact mullions and transoms',
+            subtitle: const Text('Draw exact mullions and transoms',
                 style: TextStyle(color: Colors.white54)),
             onTap: () {
               Navigator.pop(ctx);
@@ -668,10 +614,10 @@ class _DesignerScreenState extends State<DesignerScreen>
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Icon(icon, color: col, size: 22),
-          const SizedBox(height: 4),
+          Icon(icon, color: col, size: 20),
+          const SizedBox(height: 2),
           Text(label,
               style: TextStyle(
                   color: col.withOpacity(0.8),
@@ -740,9 +686,7 @@ class _DesignerScreenState extends State<DesignerScreen>
                             : Colors.white.withOpacity(0.05),
                         borderRadius: BorderRadius.circular(14),
                         border: Border.all(
-                            color: isSel
-                                ? Colors.white38
-                                : Colors.transparent),
+                            color: isSel ? Colors.white38 : Colors.transparent),
                       ),
                       child: ListTile(
                         leading: Container(
@@ -846,9 +790,7 @@ class _PropertyPanelContentState extends State<_PropertyPanelContent> {
                     color: t.frameColor,
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: sel
-                          ? Colors.white
-                          : Colors.white.withOpacity(0.2),
+                      color: sel ? Colors.white : Colors.white.withOpacity(0.2),
                       width: sel ? 3 : 1,
                     ),
                     boxShadow: sel
@@ -878,7 +820,8 @@ class _PropertyPanelContentState extends State<_PropertyPanelContent> {
             itemBuilder: (_, i) {
               final t = WindowDesignerProvider.availableThemes[i];
               // Use the glass color of the theme as the swatch, but we compare against current glassColor
-              final glassColor = t.glassColor.withOpacity(1.0); // Make it solid for the swatch
+              final glassColor =
+                  t.glassColor.withOpacity(1.0); // Make it solid for the swatch
               final sel = w.theme.glassColor == t.glassColor;
               return GestureDetector(
                 onTap: () => p.updateThemeProperty(glassColor: t.glassColor),
@@ -897,7 +840,8 @@ class _PropertyPanelContentState extends State<_PropertyPanelContent> {
                     boxShadow: sel
                         ? [
                             BoxShadow(
-                                color: glassColor.withOpacity(0.6), blurRadius: 10)
+                                color: glassColor.withOpacity(0.6),
+                                blurRadius: 10)
                           ]
                         : [],
                   ),
@@ -952,8 +896,7 @@ class _PropertyPanelContentState extends State<_PropertyPanelContent> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.window_outlined,
-                          color: sel ? Colors.white : Colors.white30,
-                          size: 22),
+                          color: sel ? Colors.white : Colors.white30, size: 22),
                       const SizedBox(height: 2),
                       Text(
                         tpl.name.split(' ').first,
@@ -1092,7 +1035,14 @@ class _PropertyPanelContentState extends State<_PropertyPanelContent> {
   }
 
   List<Widget> _buildCategoryChips(WindowDesignerProvider p) {
-    final cats = ['Rectangle', 'Circle', 'Triangle', 'Door', 'Combination', 'Other'];
+    final cats = [
+      'Rectangle',
+      'Circle',
+      'Triangle',
+      'Door',
+      'Combination',
+      'Other'
+    ];
     if (p.templates.any((t) => t.category == 'Custom')) cats.add('Custom');
     return cats.map((cat) {
       final sel = p.selectedWindow?.category == cat;
@@ -1101,21 +1051,17 @@ class _PropertyPanelContentState extends State<_PropertyPanelContent> {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 180),
           margin: const EdgeInsets.only(right: 8),
-          padding:
-              const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
           decoration: BoxDecoration(
             color: sel ? Colors.white : Colors.white.withOpacity(0.07),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-                color: sel
-                    ? Colors.white
-                    : Colors.white.withOpacity(0.12)),
+                color: sel ? Colors.white : Colors.white.withOpacity(0.12)),
           ),
           child: Text(cat,
               style: TextStyle(
                   color: sel ? Colors.black : Colors.white54,
-                  fontWeight:
-                      sel ? FontWeight.bold : FontWeight.w500,
+                  fontWeight: sel ? FontWeight.bold : FontWeight.w500,
                   fontSize: 11)),
         ),
       );
@@ -1132,7 +1078,8 @@ class _PropertyPanelContentState extends State<_PropertyPanelContent> {
         final lbl = '${cur.prefix}${counters[cur]}';
         return Padding(
           padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text('Pane $lbl',
                 style: const TextStyle(
                     color: Colors.white54,
@@ -1164,12 +1111,10 @@ class _PropertyPanelContentState extends State<_PropertyPanelContent> {
                       ),
                       child: Text(type.label,
                           style: TextStyle(
-                              color:
-                                  isSel ? Colors.white : Colors.white54,
+                              color: isSel ? Colors.white : Colors.white54,
                               fontSize: 10,
-                              fontWeight: isSel
-                                  ? FontWeight.bold
-                                  : FontWeight.w500)),
+                              fontWeight:
+                                  isSel ? FontWeight.bold : FontWeight.w500)),
                     ),
                   );
                 }).toList(),
@@ -1197,7 +1142,10 @@ class _PropertyPanelContentState extends State<_PropertyPanelContent> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Divider(
-          color: Colors.white.withOpacity(0.08), height: 1, indent: 16, endIndent: 16),
+          color: Colors.white.withOpacity(0.08),
+          height: 1,
+          indent: 16,
+          endIndent: 16),
     );
   }
 
@@ -1219,8 +1167,7 @@ class _PropertyPanelContentState extends State<_PropertyPanelContent> {
         child: SliderTheme(
           data: SliderThemeData(
             trackHeight: 2,
-            thumbShape:
-                const RoundSliderThumbShape(enabledThumbRadius: 6),
+            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 6),
             activeTrackColor: const Color(0xFF4F7BF7),
             inactiveTrackColor: Colors.white12,
             thumbColor: Colors.white,
@@ -1241,15 +1188,12 @@ class _PropertyPanelContentState extends State<_PropertyPanelContent> {
                 ? '${(val * 100).toInt()}%'
                 : '${val.toStringAsFixed(max < 30 ? 1 : 0)}',
             style: const TextStyle(
-                color: Colors.white,
-                fontSize: 9,
-                fontWeight: FontWeight.bold),
+                color: Colors.white, fontSize: 9, fontWeight: FontWeight.bold),
           )),
     ]);
   }
 
-  Widget _actionBtn(IconData icon, VoidCallback onTap,
-      {String? label}) {
+  Widget _actionBtn(IconData icon, VoidCallback onTap, {String? label}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -1257,8 +1201,7 @@ class _PropertyPanelContentState extends State<_PropertyPanelContent> {
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.08),
           borderRadius: BorderRadius.circular(12),
-          border:
-              Border.all(color: Colors.white.withOpacity(0.1)),
+          border: Border.all(color: Colors.white.withOpacity(0.1)),
         ),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Icon(icon, color: Colors.white60, size: 16),

@@ -89,7 +89,8 @@ class _ArScreenState extends State<ArScreen> with TickerProviderStateMixin {
           backgroundColor: const Color(0xFF4F7BF7),
           icon: const Icon(Icons.add, color: Colors.white),
           label: const Text('Place Window',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           onPressed: () => _showWindowLibrary(context, ar, designer),
         ),
       ),
@@ -97,8 +98,8 @@ class _ArScreenState extends State<ArScreen> with TickerProviderStateMixin {
   }
 
   // ── AppBar ────────────────────────────────────────────────────────────────
-  PreferredSizeWidget _buildAppBar(BuildContext context, ArProvider ar,
-      WindowDesignerProvider designer) {
+  PreferredSizeWidget _buildAppBar(
+      BuildContext context, ArProvider ar, WindowDesignerProvider designer) {
     return AppBar(
       backgroundColor: Colors.black.withOpacity(0.55),
       elevation: 0,
@@ -161,8 +162,8 @@ class _ArScreenState extends State<ArScreen> with TickerProviderStateMixin {
   }
 
   // ── AR Canvas ────────────────────────────────────────────────────────────
-  Widget _buildCanvas(BuildContext context, ArProvider ar,
-      WindowDesignerProvider designer) {
+  Widget _buildCanvas(
+      BuildContext context, ArProvider ar, WindowDesignerProvider designer) {
     return GestureDetector(
       onTap: ar.deselect,
       onScaleStart: (details) {
@@ -227,16 +228,15 @@ class _ArScreenState extends State<ArScreen> with TickerProviderStateMixin {
                   child: SliderTheme(
                     data: SliderThemeData(
                       trackHeight: 2,
-                      thumbShape: const RoundSliderThumbShape(
-                          enabledThumbRadius: 6),
+                      thumbShape:
+                          const RoundSliderThumbShape(enabledThumbRadius: 6),
                       activeTrackColor: const Color(0xFF4F7BF7),
                       inactiveTrackColor: Colors.white12,
                       thumbColor: Colors.white,
                     ),
                     child: Slider(
                       value: p.placementOpacity,
-                      onChanged: (v) =>
-                          ar.setPlacementOpacity(p.id, v),
+                      onChanged: (v) => ar.setPlacementOpacity(p.id, v),
                     ),
                   ),
                 ),
@@ -270,8 +270,8 @@ class _ArScreenState extends State<ArScreen> with TickerProviderStateMixin {
   }
 
   // ── Bottom strip: placed window chips ─────────────────────────────────────
-  Widget _buildBottomStrip(BuildContext context, ArProvider ar,
-      WindowDesignerProvider designer) {
+  Widget _buildBottomStrip(
+      BuildContext context, ArProvider ar, WindowDesignerProvider designer) {
     return ClipRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
@@ -279,8 +279,8 @@ class _ArScreenState extends State<ArScreen> with TickerProviderStateMixin {
           height: 96,
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.7),
-            border: Border(
-                top: BorderSide(color: Colors.white.withOpacity(0.08))),
+            border:
+                Border(top: BorderSide(color: Colors.white.withOpacity(0.08))),
           ),
           child: SafeArea(
             top: false,
@@ -299,8 +299,7 @@ class _ArScreenState extends State<ArScreen> with TickerProviderStateMixin {
                     itemCount: ar.placements.length,
                     itemBuilder: (_, i) {
                       final placement = ar.placements[i];
-                      final isActive =
-                          placement.id == ar.activePlacementId;
+                      final isActive = placement.id == ar.activePlacementId;
                       // Find the window
                       final window = designer.activeWindows.firstWhere(
                         (w) => w.id == placement.windowId,
@@ -347,13 +346,10 @@ class _ArScreenState extends State<ArScreen> with TickerProviderStateMixin {
                               Text(
                                 window.label.isNotEmpty
                                     ? window.label
-                                    : window.template.name
-                                        .split(' ')
-                                        .first,
+                                    : window.template.name.split(' ').first,
                                 style: TextStyle(
-                                  color: isActive
-                                      ? Colors.white
-                                      : Colors.white38,
+                                  color:
+                                      isActive ? Colors.white : Colors.white38,
                                   fontSize: 9,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -384,8 +380,8 @@ class _ArScreenState extends State<ArScreen> with TickerProviderStateMixin {
     );
   }
 
-  void _showWindowLibrary(BuildContext context, ArProvider ar,
-      WindowDesignerProvider designer) {
+  void _showWindowLibrary(
+      BuildContext context, ArProvider ar, WindowDesignerProvider designer) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -414,12 +410,12 @@ class _ArScreenState extends State<ArScreen> with TickerProviderStateMixin {
       }
       return;
     }
-    final path = await ExportUtils.saveToDocuments(bytes,
-        filename: 'ar_window_design');
+    final path =
+        await ExportUtils.saveToDocuments(bytes, filename: 'ar_window_design');
     if (context.mounted) {
       ExportUtils.showExportSnackbar(context, path,
           successMessage: 'Design saved!');
     }
-    await ExportUtils.shareImage(bytes, text: 'My Kintted Wings AR Design');
+    await ExportUtils.shareImage(bytes, text: 'My Anraone AR Design');
   }
 }
